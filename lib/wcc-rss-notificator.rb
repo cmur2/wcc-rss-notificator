@@ -40,6 +40,7 @@ class RSSNotificator
 					:rss_title => conf['feed_title'] || "wcc Updates Feed - #{Socket.gethostname}",
 					:rss_subtitle => conf['feed_subtitle'] || "The newest changes to your watched sites.",
 					:rss_link => conf['feed_link'],
+					:rss_alternate_link => conf['feed_alternate_link'],
 					:rss_id => conf['feed_id'],
 					:rss_file => conf['file'] || WCC::Conf.file("atom.xml"),
 					:rss_num_keep => conf['num_keep'] || 1000
@@ -72,6 +73,13 @@ class RSSNotificator
 					li.href = WCC::Conf[:rss_link]
 				end
 			end
+			if not WCC::Conf[:rss_alternate_link].nil?
+				m.channel.links.new_link do |li|
+					li.rel = "alternate"
+					li.type = "text/html"
+					li.href = WCC::Conf[:rss_alternate_link]
+				end
+			end
 			m.channel.id = WCC::Conf[:rss_id]
 			m.channel.updated = Time.now.to_s
 			m.items.do_sort = true # sort items by date
@@ -83,6 +91,7 @@ class RSSNotificator
 					#i.description = e['description']
 					i.content.content = e['content']
 					i.content.type = "html"
+					i.author = "wcc"
 					if not e['link'].nil?
 						i.links.new_link do |li|
 							li.rel = "alternate"

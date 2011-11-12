@@ -17,6 +17,7 @@ What you need to add to your conf.yml:
 	    feed_id: http://www.example.com/my-feed/
 	    # optional options
 	    #feed_link: # this now should be the feed's url
+	    #feed_alternate_link: # this may be a websites url (favicon comes from here)
 	    #feed_title: Your cool feed
 	    #feed_subtitle: About things
 	    # wcc need write permission on this file/directory:
