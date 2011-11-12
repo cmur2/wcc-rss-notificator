@@ -10,24 +10,27 @@ What you need to add to your conf.yml:
 
 	conf:
 	  [...]
-	  # feed of all entries
-	  rss:
-	    # mandatory option - Note that this is *NOT* your feed's
-	    # url or something, this should be just an unique identifier:
-	    feed_id: http://www.example.com/my-feed/
-	    # optional options
-	    #feed_link: # this now should be the feed's url
-	    #feed_alternate_link: # this may be a websites url (favicon comes from here)
-	    #feed_title: Your cool feed
-	    #feed_subtitle: About things
-	    # wcc need write permission on this file/directory:
-	    #file: <cache.d>/atom.xml
-	    # wcc will keep the N newest entries in your feed
-	    #num_keep: 1000
+	  # enable rss plugin
+	  rss: {}
 	
 	recipients:
 	  [...]
 	  - me:
 	    [...]
 	    # write updates to Atom feed
-	    - rss
+	    - rss:
+	        # wcc needs write permission on this file/directory:
+	        #file: <cache.d>/atom.xml
+	        # mandatory option! - this allows you to use different
+	        # (or same) databases for each recipient
+	        db_name: me
+	        # wcc will keep the N newest entries in your feed
+	        #num_keep: 1000
+	        feed:
+	          # mandatory option! - Note that this is *NOT* your feed's
+	          # url or something, this should be just an unique identifier:
+	          id: http://www.example.com/my-feed/
+	          #title: Your cool feed
+	          #subtitle: About things
+	          #link: # this now should be the feed's url
+	          #alternate_link: # this may be a websites url (favicon comes from here)
