@@ -10,6 +10,7 @@ class RSSNotificator
 	# TODO: can we hook into --clean?
 	
 	def initialize(opts)
+		@dirty = false
 		if opts.is_a?(Hash)
 			@file = opts['file'] || WCC::Conf.file("atom.xml")
 			@db_name = opts['db_name']
@@ -63,6 +64,7 @@ class RSSNotificator
 		id = "#{@feed['id']}item/#{Time.now.to_f}"
 		
 		# append entries to class variable (not thread safe)
+		@dirty = true
 		feed = get_feeddb['feed']
 		feed.insert 0, {
 			'title' => title,
@@ -75,6 +77,8 @@ class RSSNotificator
 	end
 	
 	def shut_down
+		return unless @dirty
+		
 		WCC.logger.debug "Writing feed-db '#{@db_name}' to file"
 		
 		feeddb_file = WCC::Conf.file("feed-db-#{@db_name}.yml")
