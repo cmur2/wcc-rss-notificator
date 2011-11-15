@@ -1,7 +1,7 @@
 wcc-rss-notificator
 ===================
 
-This adds Atom feed support to [wcc](https://github.com/cmur2/wcc) encapsuled
+This adds Atom feed support to [wcc](https://github.com/cmur2/wcc) encapsulated
 in a separate gem.
 
 Note: Currently there is only one feed for all users/recipients.
