@@ -12,7 +12,7 @@ class RSSNotificator
 	def initialize(opts)
 		@dirty = false
 		if opts.is_a?(Hash)
-			@file = opts['file'] || WCC::Conf.file("atom.xml")
+			@file = opts['file'] # may be nil
 			@db_name = opts['db_name']
 			@num_keep = opts['num_keep'] || 1000
 			@feed = {}
@@ -87,7 +87,8 @@ class RSSNotificator
 		feeddb['feed'] = feeddb['feed'].slice(0, @num_keep)
 		File.open(feeddb_file, 'w+') do |f| YAML.dump(feeddb, f) end
 		
-		WCC.logger.info "Generating feed '#{@file}'..."
+		feed_file = @file || WCC::Conf.file("atom.xml")
+		WCC.logger.info "Generating feed '#{feed_file}'..."
 		
 		content = RSS::Maker.make('atom') do |m|
 			m.channel.title = @feed[:title]
@@ -132,7 +133,7 @@ class RSSNotificator
 			end
 		end
 		
-		File.open(@file, 'w+') do |f| f.write(content.to_s) end
+		File.open(feed_file, 'w+') do |f| f.write(content.to_s) end
 	end
 	
 	def self.parse_conf(conf); {} end
