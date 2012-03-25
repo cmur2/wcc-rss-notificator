@@ -1,6 +1,6 @@
 
 Gem::Specification.new do |s|
-	s.name		= "wcc-rss-notifcator"
+	s.name		= "wcc-rss-notificator"
 	s.version	= "0.0.2"
 	s.summary	= "RSS feed notificator plugin for wcc"
 	s.author	= "Christian Nicolai"
